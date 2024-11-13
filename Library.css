@@ -1,0 +1,19 @@
+.modalTitle {
+    font-size: 20px;
+    text-align: center;
+font-weight: 900;
+    margin-top: 0;
+}
+
+dialog {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    padding: 40px;
+    max-width: 400px;
+}
+
+button:hover,
+button:focus {
+    background-color: lightskyblue;
+}
