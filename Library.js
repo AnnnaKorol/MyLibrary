@@ -27,7 +27,7 @@ newBookBtn.textContent = 'New Book';
 newBookBtn.setAttribute('style', 'width:80px; height:40px; margin-bottom: 20px;');
 document.body.appendChild(newBookBtn);
 
-newBookBtn.onClick = () =>
+//newBookBtn.onClick = () =>
 
 	function displayBooks(books) {
 		const bookList = document.createElement('div');
@@ -61,6 +61,10 @@ newBookBtn.onClick = () =>
 
 displayBooks(myLibrary);
 
+
+document.getElementById('cancelBtn').addEventListener('click', () => {
+	document.getElementById('newBookDialog').close();
+});
 
 
 

@@ -3,10 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Library</title>
-
 </head>
 <body>
 <h1>My Book Library</h1>
+
+
+<dialog id="newBookDialog">
+    <form>
+            <label>
+                Title:
+                <input type="text" id="book-title" required>
+            </label>
+            <label>
+                Author:
+                <input type="text" id="book-author">
+            </label>
+            <label>
+                Number of pages:
+                <input type="text" id="book-pages">
+            </label>
+        <div>
+            <input type="radio" id="book-read" name="book_status" value="read">
+            <label for="book-read">This book has  been read.</label>
+        </div>
+
+        <div>
+            <input type="radio" id="book-not-read" name="book_status" value="unread">
+            <label for="book-not-read">This book has not been read.</label>
+        </div>
+            <textarea rows="4" cols="50">Additional information about this book</textarea>
+        <div>
+            <button type="button" id="cancelBtn">Cancel</button>
+            <button type="submit" id="confirmBtn">Confirm</button>
+        </div>
+    </form>
+</dialog>
 
 <script src="./Library.js" defer></script>
 </body>
