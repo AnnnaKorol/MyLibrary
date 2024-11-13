@@ -45,7 +45,7 @@ document.body.appendChild(newBookBtn);
 			const titleElm = document.createElement('h2');
 			titleElm.textContent = book.title;
 			const authorElm = document.createElement('p');
-			authorElm.textContenet = book.author;
+			authorElm.textContent = book.author;
 			const pagesElm = document.createElement('p');
 			pagesElm.textContent = book.pages;
 
@@ -62,10 +62,15 @@ document.body.appendChild(newBookBtn);
 displayBooks(myLibrary);
 
 
+const newBookDialog = document.getElementById('newBookDialog');
+
+newBookBtn.onclick = () => {
+	newBookDialog.showModal();
+}
+
 document.getElementById('cancelBtn').addEventListener('click', () => {
 	document.getElementById('newBookDialog').close();
 });
-
 
 
 
