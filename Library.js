@@ -8,12 +8,13 @@ const myLibrary = [
 ];
 
 //Конструктор книги
-function Book(title, author, pages, status = 'This book has not been read.', index) {
+function Book(title = 'Not provided', author, pages, status = 'This book has not been read.', index, additionalInfo= "Not provided") {
 	this.title = title;
 	this.author = author;
 	this.pages = pages;
 	this.status = status;
 	this.index = index;
+	this.additionalInfo = additionalInfo;
 }
 
 //Метод для переключения статуса прочтения
@@ -46,7 +47,8 @@ function addBookToLibrary(book) {
 // }
 
 	const index = myLibrary.length + 1; // Генерируем индекс (можно менять по необходимости)
-	const createdBook = new Book(book.title, book.author, book.pages, book.status, index);
+
+	const createdBook = new Book(book.title, book.author, book.pages, book.status, book.additionalInfo, book.index);
 	myLibrary.push(createdBook);
 }
 
@@ -83,11 +85,13 @@ function displayBooks(books) {
 		pagesElm.textContent = `${book.pages} pages`;
 		const statusElm = document.createElement('p');
 		statusElm.textContent = book.status;
+		const additionalInfoElm = document.createElement('div');
+		additionalInfoElm.textContent = `Additional Info: ${book.additionalInfo}`;
 
 		const removeBookBtn = document.createElement('button');
 		removeBookBtn.textContent = 'Remove Book';
 
-		//Remove buttom
+		//Remove button
 		removeBookBtn.onclick = () => {
 			myLibrary.splice(index, 1); // Удаляем книгу из массива
 			displayBooks(myLibrary); // Обновляем отображение книг
@@ -105,6 +109,7 @@ function displayBooks(books) {
 		bookItem.appendChild(authorElm);
 		bookItem.appendChild(pagesElm);
 		bookItem.appendChild(statusElm);
+		bookItem.appendChild(additionalInfoElm);
 		bookItem.appendChild(removeBookBtn);
 		bookItem.appendChild(statusChangeBtn);
 
@@ -142,11 +147,11 @@ document.getElementById('confirmBtn').addEventListener('click', (event) => {
 
 
 //// Get values from form fields
-	const modalBTitle = document.getElementById('book-title').value;
-	const modalBAuthor = document.getElementById('book-author').value || "Not provided";
-	const modalBPages = document.getElementById('book-pages').value || "Not provided";
+	const modalBTitle = document.getElementById('book-title').value || "Not provided";
+	const modalBAuthor = document.getElementById('book-author').value || "Unknown";
+	const modalBPages = document.getElementById('book-pages').value || "Unknown";
 	const modalBStatus = document.querySelector('input[name="book_status"]:checked')?.value || "This book has not been read.";
-	const modalBAddInfo = document.getElementById('subject').value;
+	const modalBAddInfo = document.getElementById('subject').value  || "Not provided";
 
 	const newBook = {
 		title: modalBTitle,
@@ -155,7 +160,6 @@ document.getElementById('confirmBtn').addEventListener('click', (event) => {
 		status: modalBStatus,
 		additionalInfo: modalBAddInfo
 	};
-
 
 	addBookToLibrary(newBook);
 	displayBooks(myLibrary);
