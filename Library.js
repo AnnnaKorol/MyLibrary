@@ -8,13 +8,14 @@ const myLibrary = [
 ];
 
 //Конструктор книги
-function Book(title = 'Not provided', author, pages, status = 'This book has not been read.', index, additionalInfo= "Not provided") {
+function Book(title = 'Not provided', author, pages, status = 'This book has not been read.', additionalInfo= "Not provided", index) {
 	this.title = title;
 	this.author = author;
 	this.pages = pages;
 	this.status = status;
-	this.index = index;
 	this.additionalInfo = additionalInfo;
+	this.index = index;
+
 }
 
 //Метод для переключения статуса прочтения
