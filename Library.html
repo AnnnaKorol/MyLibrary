@@ -12,19 +12,20 @@
 <dialog id="newBookDialog">
     <form>
         <p class="modalTitle"> Add a new book to the library</p>
-
-            <label>
+<div class ="labelContainer">
+            <label class="label">
                 *Title:
                 <input type="text" id="book-title" required>
-            </label>
-            <label>
+            </label >
+            <label class="label">
                 Author:
                 <input type="text" id="book-author">
             </label>
-            <label>
+            <label class="label">
                 Number of pages:
                 <input type="text" id="book-pages">
             </label>
+</div>
         <div>
             <input type="radio" id="book-read" name="book_status" value="read">
             <label for="book-read">This book has  been read.</label>
@@ -34,8 +35,8 @@
             <input type="radio" id="book-not-read" name="book_status" value="unread">
             <label for="book-not-read">This book has not been read.</label>
         </div>
-            <textarea rows="4" cols="50">Additional information about this book</textarea>
-        <div>
+            <textarea id="subject" name="subject" placeholder="Write additional information about this book..."></textarea>
+        <div class="btnCont">
             <button type="button" id="cancelBtn">Cancel</button>
             <button type="submit" id="confirmBtn">Confirm</button>
         </div>
