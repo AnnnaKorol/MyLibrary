@@ -1,7 +1,7 @@
 const myLibrary = [
-	{title:'The Picture of Dorian Gray', author: 'Oscar Wilde', pages: '304 pages'},
-	{title:'The Old Man and the Sea', author:'Ernest Hemingway', pages: '46 pages'},
-	{title:'Blue Ocean Strategy', author:'W. Chan Kim and Renée Mauborgne', pages: '320 pages'},
+	{index: "id-1", title:'The Picture of Dorian Gray', author: 'Oscar Wilde', pages: '304'},
+	{index: "id-2", title:'The Old Man and the Sea', author:'Ernest Hemingway', pages: '46'},
+	{index: "id-3", title:'Blue Ocean Strategy', author:'W. Chan Kim and Renée Mauborgne', pages: '320'},
 ];
 
 function Book() {
@@ -9,16 +9,26 @@ function Book() {
 }
 
 function addBookToLibrary(book) {
-// const title = book.title;
-// 	const author = book.author;
-// const pages = book.pages;
-	const {title, author, pages} = book; //Destructurisation of the book, take the value in one single code.
+
+	//Check if the book already exists in the library
+	const existBook = myLibrary.some(existingBook =>
+	existingBook.title === book.title && existingBook.author === book.author);
+
+	if(existBook) {
+		alert('This book already exists!')
+		return;
+	}
+
+	const {title, author, pages, status, additionalInfo, index} = book; //Destructurisation of the book, take the value in one single code.
 	const createdBook = {
+		index: index,
 		title: title,
 		author: author,
-		pages:pages
+		pages:pages,
+		status: status,
+		additionalInfo: additionalInfo
 	};
-	myLibrary.push(createdBook);
+		myLibrary.push(createdBook);
 }
 
 
@@ -27,39 +37,63 @@ newBookBtn.textContent = 'New Book';
 newBookBtn.setAttribute('style', 'width:80px; height:40px; margin-bottom: 20px;');
 document.body.appendChild(newBookBtn);
 
-//newBookBtn.onClick = () =>
 
 	function displayBooks(books) {
-		const bookList = document.createElement('div');
+		const bookList = document.createElement('div');                                        //<div id='book-list'></div>
 		bookList.setAttribute('id', 'book-list');
 		bookList.setAttribute('style', 'display: flex; flex-direction: row; gap:20px;')
 
 
+//!!!!!!!!!!!!!!!!!!!!!
+		while (bookList.firstChild) {
+			bookList.removeChild(bookList.firstChild);
+		}
 
-		books.forEach( book => {
-			const bookItem = document.createElement('div') ;
+
+		books.forEach( (book, index) => {
+			const bookItem = document.createElement('div') ;                                    //<div class='book-item'></div>
 			bookItem.classList.add('book-item');
 			bookItem.setAttribute('style', ' border-radius: 25px; padding: 10px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; margin-bottom: 10px;');
 
 			// bookItem.innerHTML = `<h2>${book.title}</h2> <p> Author: ${book.author}</p> <p>Pages: ${book.pages}</p>`;
-			const titleElm = document.createElement('h2');
+			const titleElm = document.createElement('h2');                                  //<h2>book.title</h2>
 			titleElm.textContent = book.title;
-			const authorElm = document.createElement('p');
+			const authorElm = document.createElement('p');                                //<p>book.author</p>
 			authorElm.textContent = book.author;
-			const pagesElm = document.createElement('p');
-			pagesElm.textContent = book.pages;
+			const pagesElm = document.createElement('p');                                 //<p>book.pages</p>
+			pagesElm.textContent = `${book.pages} pages`;
 
-			bookItem.appendChild(titleElm);
+			const removeBookBtn = document.createElement('button');
+			removeBookBtn.textContent = 'Remove Book';
+
+			removeBookBtn.onclick = () => {
+				myLibrary.splice(index, 1); // Удаляем книгу из массива
+				 displayBooks(); // Обновляем отображение книг
+			};
+
+			const statusChangeBtn = document.createElement('button');
+			statusChangeBtn.textContent = 'Change status';
+
+				bookItem.appendChild(titleElm);
 			bookItem.appendChild(authorElm);
 			bookItem.appendChild(pagesElm);
+			bookItem.appendChild(removeBookBtn);
+			bookItem.appendChild(statusChangeBtn);
 
 			bookList.appendChild(bookItem);
 		});
 
-		document.body.appendChild(bookList);
+//Если списка с такими книгами нет на странице, то добавить, а если есть то мы заменяем его новым списком.
+		if (!document.getElementById('book-list')) {
+			document.body.appendChild(bookList);
+		} else {
+			document.body.replaceChild(bookList, document.getElementById('book-list'));
+		}
+
 	}
 
 displayBooks(myLibrary);
+
 
 
 const newBookDialog = document.getElementById('newBookDialog');
@@ -74,3 +108,34 @@ document.getElementById('cancelBtn').addEventListener('click', () => {
 
 
 
+
+
+
+//Modal window
+
+// Prevent confirmBtn - the form from being sent
+document.getElementById('confirmBtn').addEventListener('click', (event) => {
+	event.preventDefault();
+
+
+//// Get values from form fields
+ const modalBTitle = document.getElementById('book-title').value;
+ const modalBAuthor = document.getElementById('book-author').value || "Not provided";
+ const modalBPages = document.getElementById('book-pages').value || "Not provided";
+ const modalBStatus = document.querySelector('input[name="book_status"]:checked')?.value || "This book has not been read.";
+ const modalBAddInfo = document.getElementById('subject').value;
+
+ const newBook = {
+	 title: modalBTitle,
+	 author: modalBAuthor,
+pages: modalBPages,
+status: modalBStatus,
+	additionalInfo: modalBAddInfo
+	};
+
+
+ addBookToLibrary(newBook);
+ displayBooks(myLibrary);
+
+	newBookDialog.close();
+});
