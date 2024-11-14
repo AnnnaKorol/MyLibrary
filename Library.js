@@ -49,7 +49,7 @@ function addBookToLibrary(book) {
 
 	const index = myLibrary.length + 1; // Генерируем индекс (можно менять по необходимости)
 
-	const createdBook = new Book(book.title, book.author, book.pages, book.status, book.additionalInfo, book.index);
+	const createdBook = new Book(book.title, book.author, book.pages, book.status, book.additionalInfo, index);
 	myLibrary.push(createdBook);
 }
 
