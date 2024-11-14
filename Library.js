@@ -66,10 +66,14 @@ document.body.appendChild(newBookBtn);
 			const removeBookBtn = document.createElement('button');
 			removeBookBtn.textContent = 'Remove Book';
 
+
+
+			//Remove buttom
 			removeBookBtn.onclick = () => {
 				myLibrary.splice(index, 1); // Удаляем книгу из массива
-				 displayBooks(); // Обновляем отображение книг
+				 displayBooks(myLibrary); // Обновляем отображение книг
 			};
+
 
 			const statusChangeBtn = document.createElement('button');
 			statusChangeBtn.textContent = 'Change status';
